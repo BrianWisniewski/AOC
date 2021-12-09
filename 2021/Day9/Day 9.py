@@ -33,4 +33,70 @@ for y, x, n in potentials:
         total+=(n+1) 
 
 print(done)
-print(total)
+
+for i, j, n in done:
+    working = []
+    working.append((i,j))
+    filled=True
+    while filled==False:
+        filled = True
+        for y, x in working:
+            try:
+                if (data[y][x-1] != 9) and ((y, x-1) not in working):
+                    working.append((y, x-1))
+                    filled = False
+                    print('test')
+            except Exception:
+                pass
+
+            try:
+                if data[y][x+1] != 9 and (y, x+1) not in working:
+                    working.append((y, x+1))
+                    filled = False
+            except Exception:
+                pass
+
+            try:
+                if data[y-1][x-1] != 9 and (y-1, x-1) not in working:
+                    working.append((y-1, x-1))
+                    filled = False
+            except Exception:
+                pass
+
+            try:
+                if data[y-1][x] != 9 and (y-1, x) not in working:
+                    working.append((y-1, x))
+                    filled = False
+            except Exception:
+                pass
+
+            try:
+                if data[y-1][x+1] != 9 and (y-1, x+1) not in working:
+                    working.append((y-1, x+1))
+                    filled = False
+            except Exception:
+                pass
+
+            try:
+                if data[y+1][x-1] != 9 and (y+1, x-1) not in working:
+                    working.append((y+1, x-1))
+                    filled = False
+            except Exception:
+                pass
+
+            try:
+                if data[y+1][x] != 9 and (y+1, x) not in working:
+                    working.append((y+1, x))
+                    filled = False
+            except Exception:
+                pass
+
+            try:
+                if data[y+1][x+1] != 9 and (y+1, x+1) not in working:
+                    working.append((y+1, x+1))
+                    filled = False                                                                                            
+            except Exception:
+                pass
+
+    print(working)
+    print(len(working))
