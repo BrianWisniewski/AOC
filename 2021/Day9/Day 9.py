@@ -44,10 +44,11 @@ for i, j, n in done:
     basin = [(i,j)]
 
     filled=False
+    newWorking = []
+    working = []
     while not filled:
         filled = True
-        newWorking = []
-        working = []
+
 
         for y, x in working:
 
