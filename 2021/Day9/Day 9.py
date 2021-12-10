@@ -1,14 +1,12 @@
 import copy
 
 potentials = []
-done = []
+definite = []
 total = 0
 
 with open("2021\Day9\day9.txt") as f:
     data = f.read()
 data = data.split("\n")
-
-
 
 for pos, line in enumerate(data):
     for i, num in enumerate(line):
@@ -20,37 +18,33 @@ for pos, line in enumerate(data):
         elif num<int(line[i-1]) and num<int(line[i+1]):
             potentials.append((pos, i, num))
 
-
 for y, x, n in potentials:
 
     n = int(n)
     if y==0:
         if int(data[y+1][x])>n:
-            done.append((y, x, n))
+            definite.append((y, x, n))
             total+=(n+1) 
-    elif y==99:
+    elif y==4:
         if int(data[y-1][x])>n:
-            done.append((y, x, n))
+            definite.append((y, x, n))
             total+=(n+1)    
     elif n<int(data[y+1][x]) and n<int(data[y-1][x]):
-        done.append((y, x, n))
+        definite.append((y, x, n))
         total+=(n+1) 
 
-
 basins = []
-
-for i, j, n in done:
+for i, j, n in definite:
 
     basin = [(i,j)]
 
     filled=False
+    newWorking = []
+    working = [(i,j)]
     while not filled:
         filled = True
-        newWorking = []
-        working = []
-
         for y, x in working:
-
+            print(f'{working} \n')
             try:
                 if data[y][x-1] != 9 and (y, x-1) not in basin:
                     basin.append((y, x-1))
@@ -89,5 +83,10 @@ for i, j, n in done:
 
             working = copy.deepcopy(newWorking)
             newWorking = []
+
     basins.append(basin)
-    print(basin)
+lengths = []
+for i in basins:
+    lengths.append(len(i))
+lengths.sort()
+print(definite, basins)
