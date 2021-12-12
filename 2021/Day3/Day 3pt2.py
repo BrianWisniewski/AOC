@@ -4,43 +4,32 @@ oxy = ""
 co = ""
 ones = []
 zeros = []
-tmpNum = 0
 
 with open("2021\Day3\day3.txt") as f:
-    data = f.readlines()
+    data = f.read().split('\n')
 
-newData = copy.deepcopy(data)
-data = copy.deepcopy(newData)
-print(len(data[0]))
+def countList(lines, pos: int):
+    count = [0, 0]
+    for nums in lines:
+        if nums[pos] == '1':
+            count[1] += 1
+        elif nums[pos] == '0':
+            count[0] += 1
+    return count
 
-for pos in range(12):
-    ones = 0
-    zeros = 0
-    for line in data:
-        if line[pos] == "1":
-            ones += 1
-        else:
-            zeros += 1
-    print(ones, zeros)
+for postition in range(len(data[0])):
+    counts = countList(data, postition)
+    if counts[1] >= counts[0]:
+        numToRemove = 0
+    else:
+        numToRemove = 1
+    print(counts, numToRemove)
 
+    for i in range(len(data)):
+        
+        if int(data[i][postition]) == numToRemove:
+            print(data[i])
+            while data.count(str(data[i])) > 0:
+                data.remove(data[i])          
+print(data)
 
-    commonValue = 1 if ones>=zeros else 0
-    print(commonValue)
-
-
-    for i in data:
-        if i[pos] != commonValue:
-            try:
-                while True:
-                    newData.remove(i)
-            except ValueError:
-                pass
-    data = copy.deepcopy(newData)
-
-
-
-print(f'Oxygen: {oxy}')
-print(f'CO2: {co}')
-
-print(ones)
-print(zeros)
