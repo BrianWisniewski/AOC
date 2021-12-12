@@ -5,8 +5,7 @@ definite = []
 total = 0
 
 with open("2021\Day9\day9.txt") as f:
-    data = f.read()
-data = data.split("\n")
+    data = f.read().split("\n")
 
 for pos, line in enumerate(data):
     for i, num in enumerate(line):
@@ -38,48 +37,42 @@ for i, j, n in definite:
 
     basin = [(i,j)]
 
-    filled=False
+    filled = False
     newWorking = []
     working = [(i,j)]
     while not filled:
         filled = True
         for y, x in working:
             print(f'{working} \n')
-            try:
-                if data[y][x-1] != 9 and (y, x-1) not in basin:
-                    basin.append((y, x-1))
-                    newWorking.append((y, x-1))
-                    filled = False
+            y = int(y)
+            x = int(x)
 
-            except Exception:
-                pass
+            tmp = max(x-1, 0)
+            print(tmp)
+            if data[y][tmp] != '9' and (y, tmp) not in basin:
+                basin.append((y, tmp))
+                newWorking.append((y, tmp))
+                filled = False
 
-            try:
-                if data[y][x+1] != 9 and (y, x+1) not in basin:
-                    newWorking.append((y, x+1))
-                    basin.append((y, x+1))
-                    filled = False
+            tmp = min(x+1, 10)
+            print(tmp)
+            if data[y][tmp] != '9' and (y, tmp) not in basin:
+                newWorking.append((y, tmp))
+                basin.append((y, tmp))
+                filled = False
 
-            except Exception:
-                pass
+            tmp = min(y+1, 10)
+            print(tmp)
+            if data[tmp][x] != '9' and (tmp, x) not in basin:
+                newWorking.append((tmp, x))
+                basin.append((tmp, x))
+                filled = False
 
-            try:
-                if data[y+1][x] != 9 and (y+1, x) not in basin:
-                    newWorking.append((y+1, x))
-                    basin.append((y+1, x))
-                    filled = False
-
-            except Exception:
-                pass
-
-            try:
-                if data[y-1][x] != 9 and (y-1, x) not in basin:
-                    newWorking.append((y-1, x))
-                    basin.append((y-1, x))
-                    filled = False    
-
-            except Exception:
-                pass
+            tmp = max(y-1, 0)
+            if data[tmp][x] != '9' and (tmp, x) not in basin:
+                newWorking.append((tmp, x))
+                basin.append((tmp, x))
+                filled = False    
 
             working = copy.deepcopy(newWorking)
             newWorking = []
@@ -89,4 +82,4 @@ lengths = []
 for i in basins:
     lengths.append(len(i))
 lengths.sort()
-print(definite, basins)
+print(definite, basins, lengths)
