@@ -7,8 +7,9 @@ zeros = []
 
 with open("2021\Day3\day3.txt") as f:
     data = f.read().split('\n')
+inputLength = len(data[0])
 
-def countList(lines, pos: int):
+def countList(lines, pos):
     count = [0, 0]
     for nums in lines:
         if nums[pos] == '1':
@@ -17,19 +18,19 @@ def countList(lines, pos: int):
             count[0] += 1
     return count
 
-for postition in range(len(data[0])):
+for postition in range(inputLength):
     counts = countList(data, postition)
     if counts[1] >= counts[0]:
-        numToRemove = 0
-    else:
         numToRemove = 1
-    print(counts, numToRemove)
+    else:
+        numToRemove = 0
+    print(counts)
 
-    for i in range(len(data)):
-        
-        if int(data[i][postition]) == numToRemove:
-            print(data[i])
-            while data.count(str(data[i])) > 0:
-                data.remove(data[i])          
-print(data)
-
+    data2 = copy.deepcopy(data)
+    for line in data2:
+        if int(line[postition]) == numToRemove:
+            data.remove(line)   
+    if len(data) == 1:
+        break  
+print(data[0])     
+print(int(data[0], base=2))
