@@ -1,9 +1,8 @@
-
-newData=[]
+newData = []
 with open("2021\day8.txt") as f:
     data = f.readlines()
 for i in data:
-    newData.append(i.split(' | ')[1])
+    newData.append(i.split(" | ")[1])
 one = 0
 four = 0
 seven = 0
@@ -25,4 +24,4 @@ print(one)
 print(four)
 print(seven)
 print(eight)
-print(one+four+seven+eight)
+print(one + four + seven + eight)
