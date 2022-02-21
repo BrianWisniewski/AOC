@@ -1,8 +1,10 @@
 import copy
 import typing
 
+# Even though its not that complex I'm pretty proud of this one
+
 board = []
-sideLength = 10
+sideLength = 1000
 for i in range(sideLength):
     line = []
     for j in range(sideLength):
@@ -10,14 +12,14 @@ for i in range(sideLength):
     board.append(line)
 print("Board created")
 
-points = [ (7, 6, 3, 9), (5, 6, 1, 2), (5, 2, 5, 9), (1, 3, 5, 3)]
-# with open("./lines.txt") as f:
-#     f = f.read().split("\n")
-#     for line in f:
-#         start, end = line.split(" -> ")
-#         x1, y1 = start.split(",")
-#         x2, y2 = end.split(",")
-#         points.append((x1, y1, x2, y2))
+points = []
+with open("./lines.txt") as f:
+    f = f.read().split("\n")
+    for line in f:
+        start, end = line.split(" -> ")
+        x1, y1 = start.split(",")
+        x2, y2 = end.split(",")
+        points.append((x1, y1, x2, y2))
 print("Points imported")
 
 
@@ -39,7 +41,7 @@ def createHorizontalLine(board: list, xStart: int, xStop: int, yVal: int) -> lis
 
 def createDiagonalLineRight(board: list, startingPoint: tuple, endingPoint: tuple) -> list:
     pointToMod = startingPoint  # Takes the form of (x, y)
-    for _ in range(startingPoint[0] - endingPoint[0]):
+    for _ in range(endingPoint[0] - startingPoint[0] + 1):
         board[pointToMod[1]][pointToMod[0]] += 1
         pointToMod = (pointToMod[0] + 1, pointToMod[1] + 1)
     return board
@@ -47,7 +49,7 @@ def createDiagonalLineRight(board: list, startingPoint: tuple, endingPoint: tupl
 
 def createDiagonalLineLeft(board: list, startingPoint: tuple, endingPoint: tuple) -> list:
     pointToMod = startingPoint  # Takes the form of (x, y)
-    for _ in range(startingPoint[0] - endingPoint[0]):
+    for _ in range(startingPoint[0] - endingPoint[0] + 1):
         board[pointToMod[1]][pointToMod[0]] += 1
         pointToMod = (pointToMod[0] - 1, pointToMod[1] + 1)
     return board
@@ -67,7 +69,7 @@ for i, pointSet in enumerate(points):
     else:
         leftPoint = (x1, y1) if x1 < x2 else (x2, y2)
         rightPoint = (x1, y1) if x1 > x2 else (x2, y2)
-        print(leftPoint, rightPoint)
+
         if rightPoint[0] - leftPoint[0] == rightPoint[1] - leftPoint[1]:
             board = createDiagonalLineRight(board, leftPoint, rightPoint)
 
@@ -77,8 +79,6 @@ for i, pointSet in enumerate(points):
     print(f"Lines drawn: {i+1}/{len(points)}")
 print("All lines drawn")
 
-for line in board:
-    print(line)
 
 totalIntersections = 0
 for line in board:
