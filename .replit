@@ -1,2 +1,0 @@
-language = "python"
-run = "cd 2021/Day4; python 'Day 4.py'"
